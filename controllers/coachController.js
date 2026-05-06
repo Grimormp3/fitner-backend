@@ -36,4 +36,34 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { login };
+const registrar = async (req, res) => {
+    const { nombre_completo, email, password } = req.body;
+    console.log("Datos recibidos: ", req.body);
+    try {
+        // 1. Verificar si el email ya existe
+        const usuarios = await Coach.buscarPorEmail(email);
+
+        // Si 'usuarios' es undefined por algún error en el modelo, esto fallará.
+        // Agregamos una validación de seguridad:
+        if (usuarios && usuarios.length > 0) {
+            return res.status(400).json({ message: "El correo ya está registrado" });
+        }
+
+        if (!nombre_completo || !email || !password) {
+            return res.status(400).json({ message: "Faltan campos obligatorios" });
+        }
+        // 3. Guardar en la DB
+        await Coach.crear({
+            nombre_completo,
+            email,
+            password,
+        });
+
+        res.status(201).json({ message: "Cuenta creada exitosamente" });
+    } catch (error) {
+        console.error("Error detallado: ", error);
+        res.status(500).json({ error: "Error al registrar el coach" });
+    }
+};
+
+module.exports = { login, registrar };
