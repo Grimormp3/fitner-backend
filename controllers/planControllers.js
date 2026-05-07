@@ -29,4 +29,21 @@ const crearPlan = async (req, res) => {
     }
 };
 
-module.exports = { obtenerPlanes, crearPlan };
+const eliminarPlan = async (req, res) => {
+    try {
+        const { id } = req.params; // El ID viene en la URL
+        const id_coach = req.coachId;
+
+        const resultado = await Planes.eliminar(id, id_coach);
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ message: "Plan no encontrado o no tienes permiso" });
+        }
+
+        res.json({ message: "Plan eliminado correctamente" });
+    } catch (error) {
+        res.status(500).json({ error: "No se pudo eliminar el plan" });
+    }
+};
+
+module.exports = { obtenerPlanes, crearPlan, eliminarPlan };

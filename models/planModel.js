@@ -16,6 +16,13 @@ const Planes = {
         const [result] = await db.query(query, datos);
         return result;
     },
+
+    eliminar: async (id_plan_coach, id_coach) => {
+        // Importante: Pedimos id_coach para asegurar que el coach solo borre SUS planes
+        const query = "DELETE FROM planes_coach WHERE id_plan_coach = ? AND id_coach = ?";
+        const [result] = await db.query(query, [id_plan_coach, id_coach]);
+        return result;
+    },
 };
 
 module.exports = Planes;
