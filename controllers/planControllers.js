@@ -10,4 +10,23 @@ const obtenerPlanes = async (req, res) => {
     }
 };
 
-module.exports = { obtenerPlanes };
+const crearPlan = async (req, res) => {
+    try {
+        const nuevoPlan = {
+            ...req.body,
+            id_coach: req.coachId,
+        };
+
+        const resultado = await Planes.crear(nuevoPlan);
+
+        res.status(201).json({
+            message: "Plan creado exitosamente",
+            id_plan_coach: resultado.insertId,
+        });
+    } catch (error) {
+        console.error("Error al crear plan:", error);
+        res.status(500).json({ error: "No se pudo crear el plan" });
+    }
+};
+
+module.exports = { obtenerPlanes, crearPlan };
