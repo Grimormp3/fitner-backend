@@ -25,6 +25,7 @@ const login = async (req, res) => {
             process.env.JWT_SECRET || "secret_alternativo",
             { expiresIn: "24h" }, // El token expira en un día
         );
+        
         // Si todo está bien, respondemos con éxito
         res.status(200).json({
             message: "Login exitoso",
