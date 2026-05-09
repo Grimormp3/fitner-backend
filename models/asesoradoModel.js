@@ -17,6 +17,14 @@ const Asesorado = {
         const [rows] = await db.query(query, [id_coach]);
         return rows;
     },
+
+    obtenerPorId: async (id_asesorado, id_coach) => {
+        const query = `
+            SELECT * FROM asesorados 
+            WHERE id_asesorado = ? AND id_coach = ?`;
+        const [rows] = await db.query(query, [id_asesorado, id_coach]);
+        return rows[0]; // Retornamos solo el objeto, no el arreglo
+    },
 };
 
 module.exports = Asesorado;

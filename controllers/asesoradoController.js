@@ -32,4 +32,21 @@ const obtenerAsesorados = async (req, res) => {
     }
 };
 
-module.exports = { registrarAsesorado, obtenerAsesorados };
+const obtenerAsesoradoDetalle = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const id_coach = req.coachId;
+
+        const asesorado = await Asesorado.obtenerPorId(id, id_coach);
+
+        if (!asesorado) {
+            return res.status(404).json({ message: "Asesorado no encontrado" });
+        }
+
+        res.status(200).json(asesorado);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener los detalles del asesorado" });
+    }
+};
+
+module.exports = { registrarAsesorado, obtenerAsesorados, obtenerAsesoradoDetalle };
