@@ -2,10 +2,6 @@
 
 Repositorio que almacena el Backend de **Fitner**
 
-## Alumno
-
-Carlos Mario Grimaldo Moreno
-
 ## Tecnología usada
 
 - NodeJs
