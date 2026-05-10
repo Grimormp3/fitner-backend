@@ -8,5 +8,5 @@ router.post("/registrar", verificarToken, asesoradoController.registrarAsesorado
 
 // GET /api/asesorados/
 router.get("/", verificarToken, asesoradoController.obtenerAsesorados);
-
+router.get("/:id", verificarToken, asesoradoController.obtenerAsesoradoDetalle);
 module.exports = router;
